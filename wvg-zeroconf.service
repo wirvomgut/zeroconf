@@ -11,25 +11,19 @@
 # Author: <mail@j-liebl.de>
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
-DAEMON=/opt/wvg/zeroconf/start.sh
-PIDFILE=/var/run/wvg-zeroconf.pid
-
-test -x $DAEMON || exit 0
-
-. /lib/lsb/init-functions
+FOLDER=/opt/wvg/zeroconf/        
+APP=start.sh
+PID=wvg-zeroconf.pid
 
 case "$1" in
   start)
-     log_daemon_msg "Starting feedparser"
-     start_daemon -p $PIDFILE $DAEMON
-     log_end_msg $?
+     echo "Starting wvg zeroconf"
+     cd $FOLDER
+     sh start.sh
    ;;
   stop)
-     log_daemon_msg "Stopping feedparser"
-     killproc -p $PIDFILE $DAEMON
-     PID=`ps x |grep feed | head -1 | awk '{print $1}'`
-     kill -9 $PID       
-     log_end_msg $?
+     echo "Stopping wvg zeroconf"
+     kill $(cat $FOLDER$PID)
    ;;
   force-reload|restart)
      $0 stop
@@ -45,3 +39,4 @@ case "$1" in
 esac
 
 exit 0
+
