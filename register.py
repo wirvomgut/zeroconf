@@ -72,6 +72,8 @@ if __name__ == '__main__':
     zeroconf.register_service(info)
     try:
         while True:
-            sleep(0.1)
+            sleep(300)
+            zeroconf.unregister_service(info)
+            zeroconf.register_service(info)
     except KeyboardInterrupt:
         pass
