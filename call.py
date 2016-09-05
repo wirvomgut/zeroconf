@@ -1,3 +1,4 @@
+import os
 from socket import socket, AF_INET, SOCK_DGRAM, SOL_SOCKET, SO_BROADCAST, gethostbyname, gethostname
 from time import sleep
 
@@ -15,6 +16,14 @@ def get_ip():
     finally:
         s.close()
     return IP
+
+def write_pid():
+    pid = os.getpid()
+    op = open("./wvg-zeroconf.pid","w")
+    op.write("%s" % pid)
+    op.close()
+
+write_pid()
 
 s = socket(AF_INET, SOCK_DGRAM) #create UDP socket
 s.bind(('', 0))
